@@ -28,10 +28,27 @@ public class BumpOptions
         if (assemblyMajor) notHandled.Remove(assemblyMajorName);
 
 
+        ProjectRootElement p = ProjectRootElement.Open(this.Source);
+        foreach (var projectPropertyElement in p.Properties)
+        {
+            Console.WriteLine(projectPropertyElement.Name);
+        }
+
+        var versionProperty = p.Properties.SingleOrDefault(_ => _.Name == "Version");
+
+        //versionProperty.Value = "2.0.0";
+
+        Version v = new Version(versionProperty.Value);
+
+        Console.WriteLine($"Current Version:{v}");
+
 
         if (packagePatch)
         {
-            Console.WriteLine("You want to bump the package patch.");
+            var patch = v.Build;
+            var newPatch = v.Build + 1;
+            Console.WriteLine($"Incrementing {nameof(v.Build)} from '{patch}' to '{newPatch}");
+            v = new Version(v.Major, v.Minor, newPatch);
         }
         else
         {
@@ -51,15 +68,14 @@ public class BumpOptions
             throw new InvalidOperationException($"The following are not valid bumps: {string.Join(',',notHandled)}.");
         }
 
-        ProjectRootElement p = ProjectRootElement.Open(this.Source);
-        foreach (var projectPropertyElement in p.Properties)
-        {
-            Console.WriteLine(projectPropertyElement.Name);
-        }
 
-        var version = p.Properties.SingleOrDefault(_ => _.Name == "Version");
-        version.Value = "2.0.0";
+        versionProperty.Value = v.ToString();
+
+
+        Console.WriteLine($"New Version:{v}");
+
         p.Save();
+
         //var solutionFile = Microsoft.Build.Construction.SolutionFile.Parse(@"C:\Users\17034\source\repos\YadaYadaSoftware\assembly-version\Versioning.sln");
         //foreach (var projectInSolution in solutionFile.ProjectsInOrder)
         //{
@@ -71,6 +87,7 @@ public class BumpOptions
         //    }
 
         //}
+
 
 
 
