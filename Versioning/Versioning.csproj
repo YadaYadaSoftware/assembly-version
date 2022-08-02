@@ -9,6 +9,7 @@
 	  <ToolCommandName>dotnet-version</ToolCommandName>
 	  <RepositoryUrl>https://github.com/YadaYadaSoftware/assembly-version.git</RepositoryUrl>
 	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	  <AssemblyName>YadaYadaSoftware.$(RootNamespace)</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
