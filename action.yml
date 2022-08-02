@@ -5,10 +5,10 @@ inputs:
     description: 'Who to greet'
     required: true
     default: 'World'
-  patch:
-    description: 'Bump Patch'
-    required: true
-    default: 'true'
+  bump:
+    description: 'What to bump'
+    required: false
+    default: 'patch'
 outputs:
   random-number:
     description: "Random number"
@@ -25,5 +25,5 @@ runs:
       shell: bash
     - run: dotnet tool install -g YadaYadaSoftware.Versioning
       shell: bash
-    - run: dotnet version bump --patch ${{ inputs.patch }}
+    - run: dotnet version bump --what ${{ inputs.bump }}
       shell: bash

@@ -4,17 +4,10 @@
 public class BumpOptions
 {
 
-    [Option('p',"patch",HelpText = "Bump The Patch Version")]
-    public bool Patch { get; set; }
+    [Option('w',"what",HelpText = "What to bump")]
+    public IEnumerable<string> Bump { get; set; }
     public async Task ApplyAsync()
     {
-        if (this.Patch)
-        {
-            Console.WriteLine("You want to bump the patch");
-        }
-        else
-        {
-            Console.WriteLine("You DO NOT want to bump the patch");
-        }
+        Console.WriteLine($"You want to bump: {string.Join(',', this.Bump)}");
     }
 }
