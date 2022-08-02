@@ -1,4 +1,7 @@
 ﻿using CommandLine;
+using Microsoft.Build.Construction;
+using Microsoft.Build.Definition;
+using Microsoft.Build.Evaluation.Context;
 
 [Verb("bump-package", aliases:new []{"b"})]
 public class BumpOptions
@@ -47,6 +50,28 @@ public class BumpOptions
         {
             throw new InvalidOperationException($"The following are not valid bumps: {string.Join(',',notHandled)}.");
         }
+
+        ProjectRootElement p = ProjectRootElement.Open(this.Source);
+        foreach (var projectPropertyElement in p.Properties)
+        {
+            Console.WriteLine(projectPropertyElement.Name);
+        }
+
+        var version = p.Properties.SingleOrDefault(_ => _.Name == "Version");
+        version.Value = "2.0.0";
+        p.Save();
+        //var solutionFile = Microsoft.Build.Construction.SolutionFile.Parse(@"C:\Users\17034\source\repos\YadaYadaSoftware\assembly-version\Versioning.sln");
+        //foreach (var projectInSolution in solutionFile.ProjectsInOrder)
+        //{
+        //    Console.WriteLine(projectInSolution.ProjectName);
+        //    ProjectRootElement p = ProjectRootElement.Open(projectInSolution.AbsolutePath);
+        //    foreach (var projectPropertyElement in p.Properties)
+        //    {
+        //        Console.WriteLine(projectPropertyElement.Name);
+        //    }
+
+        //}
+
 
 
     }
