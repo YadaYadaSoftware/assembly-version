@@ -9,5 +9,22 @@ public class BumpOptions
     public async Task ApplyAsync()
     {
         Console.WriteLine($"You want to bump: {string.Join(',', this.Bump)}");
+
+        if (this.Bump.Any(_ => _.Equals("package-patch", StringComparison.InvariantCultureIgnoreCase)))
+        {
+            Console.WriteLine("You want to bump the package patch.");
+        }
+        else
+        {
+            Console.WriteLine("You DO NOT want to bump the package patch.");
+        }
+        if (this.Bump.Any(_ => _.Equals("package-major", StringComparison.InvariantCultureIgnoreCase)))
+        {
+            Console.WriteLine("You want to bump the package major.");
+        }
+        else
+        {
+            Console.WriteLine("You DO NOT want to bump the package major.");
+        }
     }
 }
