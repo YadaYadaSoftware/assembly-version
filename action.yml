@@ -26,3 +26,9 @@ runs:
       with:
         dotnet-version: 6.0.x
         source-url: https://nuget.pkg.github.com/yadayadasoftware/index.json
+    - run: dotnet build ./Versioning/Versioning.csproj --configuration Debug
+      shell: bash
+    - run: dotnet tool install --tool-path "./Versioning/bin/Debug/Versioning.1.0.0.nupkg
+      shell: bash
+    - run: dotnet version bump
+      shell: bash
