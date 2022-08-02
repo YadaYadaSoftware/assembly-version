@@ -19,7 +19,7 @@ runs:
       shell: bash
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
-    - run: dotnet tool install --tool-path Versioning/bin/Debug/Versioning.1.0.0.nupkg
+    - run: dotnet tool install -g YadaYadaSoftware.Versioning
       shell: bash
     - run: dotnet version bump
       shell: bash
