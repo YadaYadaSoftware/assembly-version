@@ -9,6 +9,9 @@ public class BumpOptions
 
     [Option('w',"what",HelpText = $"What to bump:[{packagePatchName},{assemblyMajorName}]")]
     public IEnumerable<string> Bump { get; set; }
+
+    [Option('s',"source",HelpText = "Source to bump")]
+    public string Source { get; set; }
     public async Task ApplyAsync()
     {
         Console.WriteLine($"You want to bump: {string.Join(',', this.Bump)}");
@@ -44,5 +47,7 @@ public class BumpOptions
         {
             throw new InvalidOperationException($"The following are not valid bumps: {string.Join(',',notHandled)}.");
         }
+
+
     }
 }

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Versioning": {
+      "commandName": "Project",
+      "commandLineArgs": "bump -s C:\\Users\\17034\\source\\repos\\YadaYadaSoftware\\assembly-version\\Versioning\\Versioning.csproj"
+    }
+  }
+}
