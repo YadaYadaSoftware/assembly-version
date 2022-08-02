@@ -4,13 +4,26 @@
 public class BumpOptions
 {
 
-    [Option('w',"what",HelpText = "What to bump")]
+    const string packagePatchName = "package-patch";
+    const string assemblyMajorName = "assembly-major";
+
+    [Option('w',"what",HelpText = $"What to bump:[{packagePatchName},{assemblyMajorName}]")]
     public IEnumerable<string> Bump { get; set; }
     public async Task ApplyAsync()
     {
         Console.WriteLine($"You want to bump: {string.Join(',', this.Bump)}");
 
-        if (this.Bump.Any(_ => _.Equals("package-patch", StringComparison.InvariantCultureIgnoreCase)))
+        var notHandled = new List<string>(this.Bump);
+
+        var packagePatch = notHandled.Contains(packagePatchName);
+        if (packagePatch) notHandled.Remove(packagePatchName);
+
+        var assemblyMajor = notHandled.Contains(assemblyMajorName);
+        if (assemblyMajor) notHandled.Remove(assemblyMajorName);
+
+
+
+        if (packagePatch)
         {
             Console.WriteLine("You want to bump the package patch.");
         }
@@ -18,13 +31,18 @@ public class BumpOptions
         {
             Console.WriteLine("You DO NOT want to bump the package patch.");
         }
-        if (this.Bump.Any(_ => _.Equals("package-major", StringComparison.InvariantCultureIgnoreCase)))
+        if (assemblyMajor)
         {
-            Console.WriteLine("You want to bump the package major.");
+            Console.WriteLine("You want to bump the assembly major.");
         }
         else
         {
-            Console.WriteLine("You DO NOT want to bump the package major.");
+            Console.WriteLine("You DO NOT want to bump the assembly major.");
+        }
+
+        if (notHandled.Any())
+        {
+            throw new InvalidOperationException($"The following are not valid bumps: {string.Join(',',notHandled)}.");
         }
     }
 }
