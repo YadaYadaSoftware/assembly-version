@@ -10,6 +10,7 @@
 	  <RepositoryUrl>https://github.com/YadaYadaSoftware/assembly-version.git</RepositoryUrl>
 	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	  <AssemblyName>YadaYadaSoftware.$(RootNamespace)</AssemblyName>
+	  <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
