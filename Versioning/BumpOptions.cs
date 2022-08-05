@@ -17,7 +17,7 @@ public class BumpOptions
     public string Source { get; set; }
     public async Task ApplyAsync()
     {
-        Console.WriteLine($"You want to bump: {string.Join(',', this.Bump)}");
+        // Console.WriteLine($"You want to bump: {string.Join(',', this.Bump)}");
 
         var notHandled = new List<string>(this.Bump);
 
@@ -31,7 +31,7 @@ public class BumpOptions
         ProjectRootElement p = ProjectRootElement.Open(this.Source);
         foreach (var projectPropertyElement in p.Properties)
         {
-            Console.WriteLine(projectPropertyElement.Name);
+            // Console.WriteLine(projectPropertyElement.Name);
         }
 
         var versionProperty = p.Properties.SingleOrDefault(_ => _.Name == "Version");
@@ -40,27 +40,27 @@ public class BumpOptions
 
         Version v = new Version(versionProperty.Value);
 
-        Console.WriteLine($"Current Version:{v}");
+        // Console.WriteLine($"Current Version:{v}");
 
 
         if (packagePatch)
         {
             var patch = v.Build;
             var newPatch = v.Build + 1;
-            Console.WriteLine($"Incrementing {nameof(v.Build)} from '{patch}' to '{newPatch}");
+            // Console.WriteLine($"Incrementing {nameof(v.Build)} from '{patch}' to '{newPatch}");
             v = new Version(v.Major, v.Minor, newPatch);
         }
         else
         {
-            Console.WriteLine("You DO NOT want to bump the package patch.");
+            // Console.WriteLine("You DO NOT want to bump the package patch.");
         }
         if (assemblyMajor)
         {
-            Console.WriteLine("You want to bump the assembly major.");
+            // Console.WriteLine("You want to bump the assembly major.");
         }
         else
         {
-            Console.WriteLine("You DO NOT want to bump the assembly major.");
+            // Console.WriteLine("You DO NOT want to bump the assembly major.");
         }
 
         if (notHandled.Any())
@@ -72,24 +72,11 @@ public class BumpOptions
         versionProperty.Value = v.ToString();
 
 
-        Console.WriteLine($"New Version:{v}");
+        // Console.WriteLine($"New Version:{v}");
 
         p.Save();
 
-        //var solutionFile = Microsoft.Build.Construction.SolutionFile.Parse(@"C:\Users\17034\source\repos\YadaYadaSoftware\assembly-version\Versioning.sln");
-        //foreach (var projectInSolution in solutionFile.ProjectsInOrder)
-        //{
-        //    Console.WriteLine(projectInSolution.ProjectName);
-        //    ProjectRootElement p = ProjectRootElement.Open(projectInSolution.AbsolutePath);
-        //    foreach (var projectPropertyElement in p.Properties)
-        //    {
-        //        Console.WriteLine(projectPropertyElement.Name);
-        //    }
-
-        //}
-
-
-
+        Console.WriteLine(v.ToString());
 
     }
 }
