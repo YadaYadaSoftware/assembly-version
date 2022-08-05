@@ -7,6 +7,10 @@ inputs:
   source:
     description: 'Source to bump'
     required: true
+outputs:
+  version:
+    description: "New Version Number"
+    value: ${{ runs.steps.set-version.outputs.version }}
 runs:
   using: "composite"
   steps:
@@ -14,5 +18,8 @@ runs:
       shell: bash
     - run: dotnet tool install -g YadaYadaSoftware.Versioning
       shell: bash
-    - run: dotnet version bump --what ${{ inputs.bump }} --source ${{inputs.source}}
+    - id: set-version
+      run: |
+        VERSION=`dotnet version bump --what ${{ inputs.bump }} --source ${{inputs.source}}`
+        echo "::set-output name=version::$VERSION"
       shell: bash
