@@ -10,7 +10,7 @@ inputs:
 outputs:
   version:
     description: "New Version Number"
-    value: ${{ runs.steps.set-version.outputs.version }}
+    value: ${{ steps.set-version.outputs.version }}
 runs:
   using: "composite"
   steps:
