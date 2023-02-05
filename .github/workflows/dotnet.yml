@@ -22,6 +22,10 @@ jobs:
         source-url: https://nuget.pkg.github.com/yadayadasoftware/index.json
     - name: Restore dependencies
       run: dotnet restore
+    - name: Set Version
+      run: echo "VERSION=2023.$(date +%j).${{ github.run_number }}" >> $GITHUB_ENV
+    - name: Echo Version
+      run: echo "VERSION=$VERSION"
     - name: Build
       run: dotnet build --no-restore
     - name: Test
