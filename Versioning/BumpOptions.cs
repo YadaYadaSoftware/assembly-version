@@ -1,4 +1,5 @@
-﻿using CommandLine;
+﻿using System.Diagnostics;
+using CommandLine;
 using Microsoft.Build.Construction;
 using Microsoft.Build.Definition;
 using Microsoft.Build.Evaluation.Context;
@@ -29,19 +30,22 @@ public class BumpOptions
 
 
         ProjectRootElement p = ProjectRootElement.Open(this.Source);
-        foreach (var projectPropertyElement in p.Properties)
-        {
-            // Console.WriteLine(projectPropertyElement.Name);
-        }
 
         var versionProperty = p.Properties.SingleOrDefault(_ => _.Name == "Version");
 
-        //versionProperty.Value = "2.0.0";
+        
 
-        Version v = new Version(versionProperty.Value);
+        Version v;
+        try
+        {
+            v = new Version(versionProperty.Value);
 
-        // Console.WriteLine($"Current Version:{v}");
-
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Cannot parse version of {versionProperty.Value}");
+            throw;
+        }
 
         if (packagePatch)
         {
