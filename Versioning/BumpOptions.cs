@@ -42,8 +42,7 @@ public class BumpOptions
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Cannot parse version of {versionProperty.Value}: {e}");
-            throw;
+            throw new InvalidOperationException($"Cannot parse version of {versionProperty.Value}: {e}", e);
         }
 
         if (packagePatch)
