@@ -23,9 +23,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Set Version
-      run: |
-        echo "VERSION=2023.$(date +%j).${{ github.run_number }}" >> $GITHUB_ENV
-        echo "VERSION=$VERSION"
+      run: echo "VERSION=2023.$(date +%j).${{ github.run_number }}" >> $GITHUB_ENV
+    - name: Echo Version
+      run: echo "VERSION=$VERSION"
     - name: Build
       run: dotnet build --no-restore -p:PackageVersion=$VERSION
     - name: Test
