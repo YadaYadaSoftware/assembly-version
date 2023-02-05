@@ -39,11 +39,10 @@ public class BumpOptions
         try
         {
             v = new Version(versionProperty.Value);
-
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Cannot parse version of {versionProperty.Value}");
+            Console.WriteLine($"Cannot parse version of {versionProperty.Value}: {e}");
             throw;
         }
 
